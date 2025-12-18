@@ -45,7 +45,7 @@ export default function Layout() {
         <div className="flex gap-4 text-white/55">
   <a className="hover:text-white/90" href="https://gushikendesign.com/" target="_blank">Official</a>
   <span className="opacity-40">｜</span>
-  <a className="hover:text-white/90" href="https://quiet-ai.gushiken.design/" target="_blank">Free Images</a>
+  <a className="hover:text-white/90" href="https://quiet-ai.gushikendesign.com/" target="_blank">Free Images</a>
   <span className="opacity-40">｜</span>
   <a className="hover:text-white/90" href="https://www.instagram.com/gushikendesign/" target="_blank">Instagram</a>
 </div>
