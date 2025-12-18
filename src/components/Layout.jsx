@@ -29,6 +29,7 @@ export default function Layout() {
 
         <nav className="flex items-center gap-6">
           <NavItem to="/templates">Templates</NavItem>
+          <NavItem to="/guides/vercel-analytics">Guides</NavItem>
           <NavItem to="/license">License</NavItem>
           <NavItem to="/faq">FAQ</NavItem>
         </nav>

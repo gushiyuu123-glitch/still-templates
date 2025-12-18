@@ -8,6 +8,7 @@ import Templates from "./pages/Templates";
 import TemplateDetail from "./pages/TemplateDetail";
 import License from "./pages/License";
 import Faq from "./pages/Faq";
+import VercelAnalyticsGuide from "./pages/VercelAnalyticsGuide";
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/templates/:slug" element={<TemplateDetail />} />
           <Route path="/license" element={<License />} />
           <Route path="/faq" element={<Faq />} />
+          <Route path="/guides/vercel-analytics" element={<VercelAnalyticsGuide />} />
           <Route
   path="/preview/black-orietta"
   element={<BlackOriettaPreview />}
