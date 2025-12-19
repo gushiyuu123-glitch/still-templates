@@ -76,11 +76,18 @@ export default function Layout() {
       {/* ==================================
            Footer
       ================================== */}
-      <footer className="px-6 md:px-10 py-10 text-xs text-white/45 relative z-10">
+      <footer
+  className="
+    px-6 md:px-10 py-10 
+    text-xs text-white/45 
+    relative z-10
+    border-t border-white/10   /* ← SANKOUライン */
+  "
+>
   <div
     className="
       flex flex-col items-center text-center
-      md:flex-row md:items-center md:justify-between 
+      md:flex-row md:items-center md:justify-between
       gap-4
     "
   >
@@ -89,15 +96,27 @@ export default function Layout() {
     </p>
 
     <div className="flex gap-4 text-white/55">
-      <a className="hover:text-white/90" href="https://gushikendesign.com/" target="_blank">
+      <a
+        className="hover:text-white/90"
+        href="https://gushikendesign.com/"
+        target="_blank"
+      >
         Official
       </a>
       <span className="opacity-40">｜</span>
-      <a className="hover:text-white/90" href="https://quiet-ai.gushikendesign.com/" target="_blank">
+      <a
+        className="hover:text-white/90"
+        href="https://quiet-ai.gushikendesign.com/"
+        target="_blank"
+      >
         Free Images
       </a>
       <span className="opacity-40">｜</span>
-      <a className="hover:text-white/90" href="https://www.instagram.com/gushikendesign/" target="_blank">
+      <a
+        className="hover:text-white/90"
+        href="https://www.instagram.com/gushikendesign/"
+        target="_blank"
+      >
         Instagram
       </a>
     </div>
