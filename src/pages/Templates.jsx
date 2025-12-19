@@ -38,13 +38,12 @@ export default function Templates() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // 初回マウント時に “展示会ライトON”
     const id = requestAnimationFrame(() => setMounted(true));
     return () => cancelAnimationFrame(id);
   }, []);
 
   return (
-    <section className="max-w-6xl mx-auto">
+    <section className="max-w-6xl mx-auto aq-page-fade">
       {/* ================= Header ================= */}
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-20">
         <div>
@@ -67,6 +66,10 @@ export default function Templates() {
         {templates.map((t, index) => {
           const isPremium = t.tier === "premium";
 
+          // Dior式非線形ディレイ（黄金比リズム）
+          const delays = [0, 90, 160, 260, 380, 520];
+          const delay = delays[index] || index * 90;
+
           return (
             <Link
               key={t.slug}
@@ -81,25 +84,38 @@ export default function Templates() {
                   ? "border-white/20 bg-white/[0.035] hover:border-white/45"
                   : "border-white/12 hover:border-white/30 bg-white/[0.02]"
                 }
-                hover:-translate-y-1.5 hover:shadow-[0_18px_60px_rgba(0,0,0,0.65)]
+                hover:shadow-[0_22px_70px_rgba(0,0,0,0.7)]
+                hover:-translate-y-2
+                overflow-hidden
+
                 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
               `}
               style={{
-                transitionDelay: mounted ? `${index * 70}ms` : "0ms",
+                transitionDelay: mounted ? `${delay}ms` : "0ms",
               }}
             >
+              {/* Light Strip (Dior Gold Line) */}
+              <div className="
+                pointer-events-none
+                absolute left-0 top-0 h-full w-[1px]
+                bg-[linear-gradient(to_bottom,rgba(255,225,165,0.6),transparent)]
+                opacity-40
+                group-hover:opacity-70
+                transition-opacity duration-700
+              " />
+
               {/* Tier */}
               <TierBadge tier={t.tier} />
 
               {/* Thumbnail */}
               <div
-                className={`
+                className="
                   aspect-[4/3] rounded-xl mb-8
                   bg-center bg-cover bg-no-repeat
                   border border-white/10
-                  transition-opacity duration-500
-                  group-hover:opacity-90
-                `}
+                  transition duration-700
+                  group-hover:opacity-90 group-hover:scale-[1.015]
+                "
                 style={{
                   backgroundImage: `url(${t.thumb})`,
                 }}
@@ -120,7 +136,7 @@ export default function Templates() {
                 <PriceLine t={t} />
               </div>
 
-              {/* Categories / Tags（あれば） */}
+              {/* Categories / Tags */}
               {(t.categories || t.tags) && (
                 <div className="flex flex-wrap gap-2 mb-4">
                   {t.categories?.slice(0, 2).map((c) => (
