@@ -1,11 +1,10 @@
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-// いまの↓
-// import { templates } from "../data/templates";
-
-// これに変更
 import templates from "../data/templates.json";
 
+/* ============================
+   Small Components
+============================ */
 function SectionTitle({ children }) {
   return (
     <h3 className="text-[11px] tracking-[0.32em] uppercase text-white/60 mb-5">
@@ -16,7 +15,12 @@ function SectionTitle({ children }) {
 
 function PremiumNote() {
   return (
-    <div className="rounded-xl border border-white/15 bg-white/[0.035] p-7">
+    <div
+      className="
+        rounded-xl border border-white/15 bg-white/[0.035]
+        p-7 animate-panel
+      "
+    >
       <SectionTitle>Positioning</SectionTitle>
       <p className="text-sm text-white/75 leading-relaxed">
         This is not a starter template.
@@ -34,6 +38,13 @@ function PremiumNote() {
 export default function TemplateDetail() {
   const { slug } = useParams();
   const t = useMemo(() => templates.find((x) => x.slug === slug), [slug]);
+
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   if (!t) {
     return (
@@ -55,7 +66,12 @@ export default function TemplateDetail() {
   return (
     <section className="max-w-5xl mx-auto">
       {/* ================= Header ================= */}
-      <div className="mb-20">
+      <div
+        className={`
+          mb-20 transition-all duration-[900ms] ease-out
+          ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
+        `}
+      >
         <Link
           to="/templates"
           className="text-xs tracking-[0.25em] uppercase text-white/50 hover:text-white/75"
@@ -63,6 +79,7 @@ export default function TemplateDetail() {
           ← Templates
         </Link>
 
+        {/* Title + tagline */}
         <div className="mt-10 flex flex-col md:flex-row md:items-end md:justify-between gap-10">
           <div>
             {isPremium && (
@@ -80,14 +97,14 @@ export default function TemplateDetail() {
             </p>
           </div>
 
-          {/* ========== BUTTON AREA (完全集約) ========== */}
+          {/* Buttons */}
           <div className="text-right">
             <p className="text-xs text-white/45 mb-4">
               {isLive ? "Instant download" : "Coming soon"}
             </p>
 
             <div className="flex flex-wrap justify-end gap-3">
-              {/* Preview button */}
+              {/* Live preview for special templates */}
               {t.slug === "black-orietta" && (
                 <Link
                   to="/preview/black-orietta"
@@ -150,30 +167,47 @@ export default function TemplateDetail() {
         </div>
       </div>
 
-{/* ================= Preview ================= */}
-{/* ================= Preview ================= */}
-<div className="grid md:grid-cols-3 gap-6 mb-24">
-  {/* Main preview */}
-  <img
-    src={`/previews/${t.slug}/hero.png`}
-    alt={`${t.title} main preview`}
-    className="md:col-span-2 rounded-xl border border-white/10 object-cover w-full"
-  />
+      {/* ================= Preview ================= */}
+      <div className="grid md:grid-cols-3 gap-6 mb-24">
+        {/* Main preview */}
+        <div
+          className="
+            md:col-span-2 rounded-xl border border-white/10
+            overflow-hidden relative animate-panel
+          "
+        >
+          <img
+            src={`/previews/${t.slug}/hero.png`}
+            alt={`${t.title} main preview`}
+            className="
+              w-full object-cover
+              animate-float-slow
+            "
+          />
+        </div>
 
-  {/* Sub preview */}
-  <img
-    src={`/previews/${t.slug}/product.png`}
-    alt={`${t.title} sub preview`}
-    className="rounded-xl border border-white/10 object-cover w-full"
-  />
-</div>
-
+        {/* Sub preview */}
+        <div
+          className="
+            rounded-xl border border-white/10
+            overflow-hidden animate-panel delay-150
+          "
+        >
+          <img
+            src={`/previews/${t.slug}/product.png`}
+            alt={`${t.title} sub preview`}
+            className="w-full object-cover animate-float-soft"
+          />
+        </div>
+      </div>
 
       {/* ================= Content ================= */}
       <div className="grid md:grid-cols-3 gap-16">
-        {/* LEFT */}
+        {/* LEFT CONTENT */}
         <div className="md:col-span-2 space-y-16">
-          <div>
+
+          {/* Highlights */}
+          <div className="animate-panel">
             <SectionTitle>Highlights</SectionTitle>
             <ul className="space-y-2 text-white/70 text-sm">
               {t.highlights.map((h) => (
@@ -182,8 +216,9 @@ export default function TemplateDetail() {
             </ul>
           </div>
 
-          <div>
-            <SectionTitle>What&apos;s included</SectionTitle>
+          {/* Included pages */}
+          <div className="animate-panel delay-100">
+            <SectionTitle>What's included</SectionTitle>
             <ul className="space-y-2 text-white/70 text-sm">
               {t.includedPages.map((p) => (
                 <li key={p}>• {p}</li>
@@ -193,7 +228,8 @@ export default function TemplateDetail() {
             </ul>
           </div>
 
-          <div>
+          {/* Requirements */}
+          <div className="animate-panel delay-200">
             <SectionTitle>Requirements</SectionTitle>
             <ul className="space-y-2 text-white/70 text-sm">
               {t.requirements.map((r) => (
@@ -203,11 +239,11 @@ export default function TemplateDetail() {
           </div>
         </div>
 
-        {/* RIGHT */}
+        {/* RIGHT SIDEBAR */}
         <aside className="space-y-12">
           {isPremium && <PremiumNote />}
 
-          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-7">
+          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-7 animate-panel">
             <SectionTitle>License</SectionTitle>
             <p className="text-sm text-white/70 leading-relaxed">
               Commercial use is allowed.
@@ -216,7 +252,7 @@ export default function TemplateDetail() {
             </p>
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-7">
+          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-7 animate-panel delay-100">
             <SectionTitle>Refund policy</SectionTitle>
             <p className="text-sm text-white/70 leading-relaxed">
               Due to the digital nature of this product,
@@ -226,7 +262,7 @@ export default function TemplateDetail() {
             </p>
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-7">
+          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-7 animate-panel delay-200">
             <SectionTitle>Support</SectionTitle>
             <p className="text-sm text-white/70 leading-relaxed">
               This template is sold as-is.
