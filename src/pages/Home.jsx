@@ -1,116 +1,96 @@
 import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 
+/* =========================================
+   Dior Gold Exhibition — Hero
+   静寂の中に金の光が差すミニマル Hero
+========================================= */
 export default function Home() {
+  const titleRef = useRef(null);
+  const leadRef = useRef(null);
+  const ctaRef = useRef(null);
+
+  useEffect(() => {
+    const tl = gsap.timeline({ delay: 0.1 });
+
+    tl.fromTo(
+      titleRef.current,
+      { opacity: 0, y: 14 },
+      { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
+    )
+      .fromTo(
+        leadRef.current,
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" },
+        "-=0.6"
+      )
+      .fromTo(
+        ctaRef.current,
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 1.1, ease: "power3.out" },
+        "-=0.7"
+      );
+  }, []);
+
   return (
-    <section
-      className="
-        relative max-w-5xl mx-auto text-center
-        aq-page-fade aq-section-top px-6
-      "
-    >
-      {/* Eyebrow */}
-      <span
-        className="
-          block text-[11px]
-          tracking-[0.38em]
-          uppercase
-          text-white/55
-          mb-8
-          aq-fade-up aq-delay-1
-        "
-      >
+    <section className="relative max-w-5xl mx-auto text-center py-24 aq-page-fade">
+      {/* Dior Light Fog */}
+      <div className="absolute inset-0 -z-10 opacity-[0.22] bg-[radial-gradient(circle_at_50%_20%,rgba(255,255,255,0.08),transparent_60%)]"></div>
+
+      {/* Gold Line */}
+      <div className="w-20 h-px mx-auto mb-10 bg-[linear-gradient(90deg,transparent,rgba(255,213,140,0.7),transparent)]"></div>
+
+      {/* Label */}
+      <span className="block text-[11px] tracking-[0.35em] uppercase text-white/60 mb-6">
         HTML Templates Collection
       </span>
 
       {/* Title */}
       <h1
-        className="
-          text-[40px] md:text-[64px]
-          font-light
-          tracking-[0.16em]
-          leading-[1.18]
-          text-white
-          mb-10
-          aq-fade-up aq-delay-2
-        "
+        ref={titleRef}
+        className="text-5xl md:text-6xl font-light tracking-[0.14em] leading-tight mb-8 animate-float-soft"
       >
         Minimal Templates
         <br />
-        Designed to Sell
+        Built for Real Brands
       </h1>
 
-      {/* Description */}
+      {/* Lead */}
       <p
-        className="
-          max-w-xl mx-auto
-          text-[15px] md:text-[17px]
-          text-white/70
-          leading-relaxed
-          mb-6
-          aq-fade-up aq-delay-3
-        "
+        ref={leadRef}
+        className="max-w-xl mx-auto text-sm md:text-base text-white/70 leading-relaxed mb-5"
       >
-        Crafted for cafés, salons, and quiet brands that value atmosphere,
-        clarity, and commercial strength.
+        Templates crafted for cafés, salons, and quiet luxury brands.
+        <br className="hidden md:block" />
+        Designed with clarity, atmosphere, and commercial strength.
       </p>
 
-      {/* Subline */}
-      <p
-        className="
-          text-[11px] md:text-[12px]
-          text-white/45
-          tracking-wide
-          mb-16
-          aq-fade-up aq-delay-4
-        "
-      >
-        Clean HTML • SEO-ready • Responsive • Easy to customize  
-        <br />
-        Trusted by designers and small studios worldwide
+      <p className="text-xs md:text-sm text-white/50 mb-14">
+        Clean HTML • SEO-ready • Fully responsive • Easy to customize
       </p>
 
-      {/* CTA buttons */}
-      <div
-        className="
-          flex items-center justify-center gap-6
-          mb-14 aq-fade-up aq-delay-5
-        "
-      >
+      {/* CTA */}
+      <div ref={ctaRef} className="flex items-center justify-center gap-6 mb-10">
         <Link
           to="/templates"
           className="
-            inline-block
-            border border-white/[0.28]
-            px-14 py-4
-            text-[11px]
-            tracking-[0.32em]
-            uppercase
-            text-white/85
-            hover:bg-white hover:text-black
-            transition-all
+            inline-block border border-white/25 px-14 py-4
+            text-xs tracking-[0.3em] uppercase
+            hover:bg-white hover:text-black transition
+            aq-hover-lift
           "
         >
           Browse Templates
         </Link>
 
-        <span className="text-xs text-white/40 tracking-wide">
-          From $19 · One-time purchase
-        </span>
+        <span className="text-xs text-white/40">From $19 · One-time purchase</span>
       </div>
 
       {/* Featured link */}
       <Link
         to="/templates/black-orietta"
-        className="
-          inline-block
-          text-[11px]
-          tracking-[0.32em]
-          uppercase
-          text-white/55
-          hover:text-white
-          transition-all
-          aq-fade-up aq-delay-6
-        "
+        className="inline-block text-xs tracking-[0.28em] uppercase text-white/50 hover:text-white transition aq-fade-horizontal aq-delay-2"
       >
         Featured: Black Orietta →
       </Link>
