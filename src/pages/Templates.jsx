@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
-import { templates } from "../data/templates";
+// いまの↓
+// import { templates } from "../data/templates";
+
+// これに変更
+import templates from "../data/templates.json";
 
 function PriceLine({ t }) {
   if (t.status === "live") {

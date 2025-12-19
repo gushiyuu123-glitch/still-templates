@@ -1,0 +1,29 @@
+{
+  "title": "Quiet Cafe Template",
+  "tagline": "Minimal HTML template for cafés, salons, and small spaces that value calm atmosphere.",
+  "price": 19,
+  "tier": "standard",
+  "status": "coming",
+  "gumroadUrl": null,
+
+  "categories": ["cafe", "small-business"],
+  "tags": ["minimal", "light", "calm"],
+
+  "highlights": [
+    "Single-column calm layout",
+    "Menu & story section included",
+    "Mobile-first typography"
+  ],
+
+  "includedPages": [
+    "Home",
+    "Menu",
+    "About",
+    "Gallery",
+    "Contact"
+  ],
+
+  "requirements": [
+    "Basic HTML/CSS knowledge"
+  ]
+}

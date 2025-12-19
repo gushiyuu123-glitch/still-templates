@@ -1,0 +1,28 @@
+{
+  "title": "Black Orietta",
+  "tagline": "Premium HTML template for quiet luxury brands",
+  "price": 69,
+  "tier": "premium",
+  "status": "live",
+  "gumroadUrl": "https://gushikendesign.gumroad.com/l/istan",
+
+  "categories": ["brand", "luxury", "dark"],
+  "tags": ["minimal", "quiet", "story", "long-scroll"],
+
+  "highlights": [
+    "Reference-grade brand experience",
+    "Typography-first, minimal layout",
+    "Long-scroll story structure",
+    "SEO-ready HTML"
+  ],
+
+  "includedPages": [
+    "Home",
+    "Concept",
+    "Collection",
+    "About",
+    "Contact"
+  ],
+
+  "requirements": ["Basic HTML/CSS knowledge"]
+}
