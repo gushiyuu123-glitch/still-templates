@@ -1,6 +1,7 @@
+// src/pages/Templates.jsx
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import templates from "../data/templates.json";
+import { templates } from "../data/templates";   // ← ここが最重要ポイント
 
 function PriceLine({ t }) {
   if (t.status === "live") {
@@ -66,7 +67,7 @@ export default function Templates() {
         {templates.map((t, index) => {
           const isPremium = t.tier === "premium";
 
-          // Dior式非線形ディレイ（黄金比リズム）
+          // Dior式ディレイ
           const delays = [0, 90, 160, 260, 380, 520];
           const delay = delays[index] || index * 90;
 
@@ -87,14 +88,13 @@ export default function Templates() {
                 hover:shadow-[0_22px_70px_rgba(0,0,0,0.7)]
                 hover:-translate-y-2
                 overflow-hidden
-
                 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
               `}
               style={{
                 transitionDelay: mounted ? `${delay}ms` : "0ms",
               }}
             >
-              {/* Light Strip (Dior Gold Line) */}
+              {/* Light Strip */}
               <div className="
                 pointer-events-none
                 absolute left-0 top-0 h-full w-[1px]
@@ -104,7 +104,7 @@ export default function Templates() {
                 transition-opacity duration-700
               " />
 
-              {/* Tier */}
+              {/* Premium Badge */}
               <TierBadge tier={t.tier} />
 
               {/* Thumbnail */}
@@ -121,13 +121,12 @@ export default function Templates() {
                 }}
               />
 
-              {/* Title & meta */}
+              {/* Title / Tagline / Price */}
               <div className="flex items-start justify-between gap-4 mb-5">
                 <div>
                   <h3 className="text-sm md:text-base tracking-[0.06em] mb-1">
                     {t.title}
                   </h3>
-
                   <p className="text-xs text-white/60 leading-relaxed">
                     {t.tagline}
                   </p>
@@ -135,42 +134,6 @@ export default function Templates() {
 
                 <PriceLine t={t} />
               </div>
-
-              {/* Categories / Tags */}
-              {(t.categories || t.tags) && (
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {t.categories?.slice(0, 2).map((c) => (
-                    <span
-                      key={`cat-${t.slug}-${c}`}
-                      className="
-                        text-[10px]
-                        px-2.5 py-1
-                        rounded-full
-                        border border-white/10
-                        text-white/55
-                        tracking-[0.16em] uppercase
-                      "
-                    >
-                      {c}
-                    </span>
-                  ))}
-
-                  {t.tags?.slice(0, 2).map((tag) => (
-                    <span
-                      key={`tag-${t.slug}-${tag}`}
-                      className="
-                        text-[10px]
-                        px-2.5 py-1
-                        rounded-full
-                        bg-white/[0.04]
-                        text-white/60
-                      "
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
 
               {/* Highlights */}
               <div className="flex flex-wrap gap-2 mt-3">

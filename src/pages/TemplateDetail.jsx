@@ -1,6 +1,8 @@
+// src/pages/TemplateDetail.jsx
+
 import { useMemo, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import templates from "../data/templates.json";
+import { templates } from "../data/templates";   // ← 最重要：templates.js を参照
 
 /* ============================
    Small Components
@@ -13,30 +15,10 @@ function SectionTitle({ children }) {
   );
 }
 
-function PremiumNote() {
-  return (
-    <div
-      className="
-        rounded-xl border border-white/15 bg-white/[0.035]
-        p-7 animate-panel
-      "
-    >
-      <SectionTitle>Positioning</SectionTitle>
-      <p className="text-sm text-white/75 leading-relaxed">
-        This is not a starter template.
-        <br />
-        Black Orietta is designed as a reference-grade system for brands that
-        value silence, restraint, and atmosphere over explanation.
-      </p>
-      <p className="mt-4 text-xs text-white/45 leading-relaxed">
-        Built to set a benchmark — not to follow trends.
-      </p>
-    </div>
-  );
-}
-
 export default function TemplateDetail() {
   const { slug } = useParams();
+
+  // templates.js から正しいデータを取得
   const t = useMemo(() => templates.find((x) => x.slug === slug), [slug]);
 
   const [mounted, setMounted] = useState(false);
@@ -104,23 +86,21 @@ export default function TemplateDetail() {
             </p>
 
             <div className="flex flex-wrap justify-end gap-3">
-              {/* Live preview for special templates */}
-              {t.slug === "black-orietta" && (
-                <Link
-                  to="/preview/black-orietta"
-                  className="
-                    inline-block
-                    border border-white/20
-                    px-6 py-3
-                    text-[11px] tracking-[0.28em] uppercase
-                    text-white/75
-                    hover:border-white/40
-                    transition
-                  "
-                >
-                  Live preview
-                </Link>
-              )}
+              {/* Live preview */}
+              <Link
+                to={`/preview/${t.slug}`}
+                className="
+                  inline-block
+                  border border-white/20
+                  px-6 py-3
+                  text-[11px] tracking-[0.28em] uppercase
+                  text-white/75
+                  hover:border-white/40
+                  transition
+                "
+              >
+                Live preview
+              </Link>
 
               {/* Buy button */}
               {isLive ? (
@@ -156,11 +136,9 @@ export default function TemplateDetail() {
               )}
             </div>
 
-            {isPremium && (
-              <p className="mt-5 text-xs text-white/45 max-w-xs leading-relaxed">
-                Typography-first. Minimal. Intentionally opinionated.
-                <br />
-                Designed for brands that communicate through mood.
+            {isPremium && t.premiumNote && (
+              <p className="mt-5 text-xs text-white/45 max-w-xs leading-relaxed whitespace-pre-line">
+                {t.premiumNote}
               </p>
             )}
           </div>
@@ -177,12 +155,9 @@ export default function TemplateDetail() {
           "
         >
           <img
-            src={`/previews/${t.slug}/hero.png`}
+            src={t.thumb}
             alt={`${t.title} main preview`}
-            className="
-              w-full object-cover
-              animate-float-slow
-            "
+            className="w-full object-cover animate-float-slow"
           />
         </div>
 
@@ -205,7 +180,6 @@ export default function TemplateDetail() {
       <div className="grid md:grid-cols-3 gap-16">
         {/* LEFT CONTENT */}
         <div className="md:col-span-2 space-y-16">
-
           {/* Highlights */}
           <div className="animate-panel">
             <SectionTitle>Highlights</SectionTitle>
@@ -241,8 +215,21 @@ export default function TemplateDetail() {
 
         {/* RIGHT SIDEBAR */}
         <aside className="space-y-12">
-          {isPremium && <PremiumNote />}
+          {isPremium && t.premiumNote && (
+            <div
+              className="
+                rounded-xl border border-white/15 bg-white/[0.035]
+                p-7 animate-panel
+              "
+            >
+              <SectionTitle>Positioning</SectionTitle>
+              <p className="text-sm text-white/75 leading-relaxed whitespace-pre-line">
+                {t.premiumNote}
+              </p>
+            </div>
+          )}
 
+          {/* License */}
           <div className="rounded-xl border border-white/10 bg-white/[0.03] p-7 animate-panel">
             <SectionTitle>License</SectionTitle>
             <p className="text-sm text-white/70 leading-relaxed">
@@ -252,6 +239,7 @@ export default function TemplateDetail() {
             </p>
           </div>
 
+          {/* Refund policy */}
           <div className="rounded-xl border border-white/10 bg-white/[0.03] p-7 animate-panel delay-100">
             <SectionTitle>Refund policy</SectionTitle>
             <p className="text-sm text-white/70 leading-relaxed">
@@ -262,6 +250,7 @@ export default function TemplateDetail() {
             </p>
           </div>
 
+          {/* Support */}
           <div className="rounded-xl border border-white/10 bg-white/[0.03] p-7 animate-panel delay-200">
             <SectionTitle>Support</SectionTitle>
             <p className="text-sm text-white/70 leading-relaxed">
